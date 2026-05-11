@@ -1,8 +1,3 @@
-/**
- * Controller — Mediador entre Model e View.
- * Captura eventos e coordena as ações entre as duas camadas.
- */
-
 const REVEAL_DELAY_PER_TILE_MS = 300;
 
 const MESSAGES = {
