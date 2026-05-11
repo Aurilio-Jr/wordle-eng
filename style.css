@@ -1,0 +1,356 @@
+/* ============================================================
+   WORDLE ENG — style.css
+   Design: dark retro-terminal com tipografia bold e animações
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&display=swap');
+
+/* ── Variáveis ──────────────────────────────────────────────── */
+:root {
+  --color-correct:  #538d4e;
+  --color-present:  #b59f3b;
+  --color-absent:   #3a3a3c;
+  --color-bg:       #0f0f10;
+  --color-surface:  #1a1a1c;
+  --color-border:   #3a3a3c;
+  --color-text:     #e8e8e8;
+  --color-muted:    #818384;
+  --color-accent:   #538d4e;
+
+  --tile-size:      58px;
+  --tile-gap:       6px;
+  --tile-font:      'Bebas Neue', sans-serif;
+  --ui-font:        'Share Tech Mono', monospace;
+
+  --transition-flip: 0.35s ease-in-out;
+}
+
+/* ── Reset & Base ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--ui-font);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 48px;
+}
+
+/* ── Utilitário ─────────────────────────────────────────────── */
+.hidden { display: none !important; }
+
+/* ── Tela Inicial ───────────────────────────────────────────── */
+#screen-start {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  gap: 24px;
+  text-align: center;
+}
+
+.start-title {
+  font-family: var(--tile-font);
+  font-size: clamp(3rem, 10vw, 6rem);
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+  text-shadow: 0 0 40px rgba(83,141,78,0.4);
+  line-height: 1;
+}
+
+.start-subtitle {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.start-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-language {
+  background: transparent;
+  color: var(--color-text);
+  border: 2px solid var(--color-accent);
+  padding: 14px 36px;
+  cursor: pointer;
+  font-family: var(--ui-font);
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.btn-language:hover {
+  background: var(--color-accent);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(83,141,78,0.5);
+}
+
+/* ── Tela do Jogo ───────────────────────────────────────────── */
+#screen-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Instrução */
+#instruction-message {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Stats bar */
+.stats-bar {
+  display: flex;
+  gap: 32px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 10px 28px;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+.stats-bar span {
+  color: var(--color-accent);
+  font-family: var(--tile-font);
+  font-size: 1.4rem;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+/* ── Tabuleiro ──────────────────────────────────────────────── */
+#board {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tile-gap);
+}
+
+.board-row {
+  display: flex;
+  gap: var(--tile-gap);
+}
+
+/* ── Tiles ──────────────────────────────────────────────────── */
+.tile {
+  width: var(--tile-size);
+  height: var(--tile-size);
+  border: 2px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--tile-font);
+  font-size: 2rem;
+  text-transform: uppercase;
+  transition: border-color 0.1s;
+  perspective: 250px;
+}
+
+.tile--filled {
+  border-color: #666;
+  animation: pop 0.1s ease-in-out;
+}
+
+.tile--revealed {
+  animation: flip var(--transition-flip) ease forwards;
+}
+
+.tile--correct  { background: var(--color-correct);  border-color: var(--color-correct); }
+.tile--present  { background: var(--color-present);  border-color: var(--color-present); }
+.tile--absent   { background: var(--color-absent);   border-color: var(--color-absent);  }
+
+/* ── Animações ──────────────────────────────────────────────── */
+@keyframes pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+@keyframes flip {
+  0%   { transform: rotateX(0); }
+  50%  { transform: rotateX(-90deg); }
+  100% { transform: rotateX(0); }
+}
+
+/* ── Feedback ───────────────────────────────────────────────── */
+.feedback {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-80px);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 12px 28px;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 100;
+}
+
+.feedback--visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.feedback--success { border-color: var(--color-correct); color: var(--color-correct); }
+.feedback--error   { border-color: #e04; color: #e04; }
+.feedback--info    { border-color: var(--color-present); color: var(--color-present); }
+
+/* ── Teclado Virtual (mobile) ───────────────────────────────── */
+.virtual-keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 6px;
+}
+
+.key {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-family: var(--ui-font);
+  font-size: 0.75rem;
+  padding: 14px 10px;
+  min-width: 36px;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: background 0.15s;
+  user-select: none;
+}
+
+.key:active        { background: #444; }
+.key--wide         { min-width: 56px; font-size: 0.65rem; }
+
+/* Estados de letra no teclado virtual */
+.key--correct {
+  background: var(--color-correct);
+  border-color: var(--color-correct);
+  color: #fff;
+}
+.key--present {
+  background: var(--color-present);
+  border-color: var(--color-present);
+  color: #fff;
+}
+.key--absent {
+  background: #1a1a1c;
+  border-color: #1a1a1c;
+  color: #555;
+}
+
+/* ── Overlay de fim de jogo ─────────────────────────────────── */
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 50;
+  animation: fadeIn 0.3s ease;
+}
+
+#screen-game {
+  position: relative;
+}
+
+.overlay-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(0,0,0,0.6);
+  min-width: 280px;
+}
+
+.overlay-title {
+  font-family: var(--tile-font);
+  font-size: 2.2rem;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+}
+
+.overlay-word {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.overlay-score {
+  font-family: var(--tile-font);
+  font-size: 1.4rem;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.overlay-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-action {
+  padding: 12px 28px;
+  font-family: var(--ui-font);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 2px solid;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.btn-action--primary {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+.btn-action--primary:hover {
+  box-shadow: 0 0 20px rgba(83,141,78,0.6);
+  background: #5fa858;
+}
+
+.btn-action--secondary {
+  background: transparent;
+  border-color: var(--color-muted);
+  color: var(--color-muted);
+}
+.btn-action--secondary:hover {
+  border-color: var(--color-text);
+  color: var(--color-text);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
