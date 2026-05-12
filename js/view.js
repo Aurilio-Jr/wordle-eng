@@ -1,8 +1,3 @@
-/**
- * View — Responsável exclusivamente pela renderização do DOM.
- * Não contém lógica de negócio nem acesso ao estado do jogo.
- */
-
 const GameView = {
   // ── Referências aos elementos do DOM ──────────────────────────────────────
 
