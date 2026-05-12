@@ -1,8 +1,3 @@
-/**
- * Model — Gerencia estado, dicionários, lógica de negócio e pontuação.
- * Não possui qualquer referência ao DOM.
- */
-
 const WORD_LENGTH = 5;
 const MAX_ATTEMPTS = 6;
 const POINTS_CORRECT_POSITION = 10;
