@@ -1,10 +1,10 @@
 /**
- * View — Responsável exclusivamente pela renderização do DOM.
+ * View - Responsável exclusivamente pela renderização do DOM.
  * Não contém lógica de negócio nem acesso ao estado do jogo.
  */
 
 const GameView = {
-  // ── Referências aos elementos do DOM ──────────────────────────────────────
+  // Referências aos elementos do DOM
 
   screens: {
     start: document.getElementById("screen-start"),
@@ -23,7 +23,7 @@ const GameView = {
     overlayScore:       document.getElementById("overlay-score"),
   },
 
-  // ── Transições de tela ────────────────────────────────────────────────────
+  // Transições de tela
 
   showStartScreen() {
     this.screens.start.classList.remove("hidden");
@@ -37,7 +37,7 @@ const GameView = {
     this._resetKeyboardColors();
   },
 
-  // ── Construção do tabuleiro ────────────────────────────────────────────────
+  // Construção do tabuleiro
 
   /**
    * Reconstrói o tabuleiro do zero (MAX_ATTEMPTS linhas × WORD_LENGTH colunas).
@@ -61,7 +61,7 @@ const GameView = {
     }
   },
 
-  // ── Atualização de tiles ───────────────────────────────────────────────────
+  // Atualização de tiles
 
   /** Exibe uma letra em um tile específico. */
   setTileLetter(row, col, letter) {
@@ -81,10 +81,10 @@ const GameView = {
     }, delayMs);
   },
 
-  // ── Teclado Virtual — coloração ───────────────────────────────────────────
+  // Teclado virtual - coloração
 
   /**
-   * Atualiza a cor das teclas do teclado virtual com base nos resultados.
+   * Atualiza a cor das teclas com base nos resultados.
    * Prioridade: correct > present > absent
    */
   updateKeyboard(guess, evaluationResults) {
@@ -112,7 +112,7 @@ const GameView = {
     });
   },
 
-  // ── Overlay de fim de jogo ─────────────────────────────────────────────────
+  // Overlay de fim de jogo
 
   /** Exibe o painel de resultado quando o jogo termina. */
   showOverlay({ title, word, score }) {
@@ -126,7 +126,7 @@ const GameView = {
     this.elements.gameOverlay.classList.add("hidden");
   },
 
-  // ── Estatísticas ──────────────────────────────────────────────────────────
+  // Estatísticas
 
   updateScore(score) {
     this.elements.scoreValue.textContent = score;
@@ -136,7 +136,7 @@ const GameView = {
     this.elements.roundValue.textContent = round;
   },
 
-  // ── Mensagens ─────────────────────────────────────────────────────────────
+  // Mensagens
 
   setInstruction(message) {
     this.elements.instructionMessage.textContent = message;

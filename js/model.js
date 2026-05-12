@@ -1,5 +1,5 @@
 /**
- * Model — Gerencia estado, dicionários, lógica de negócio e pontuação.
+ * Model - Gerencia estado, dicionários, lógica de negócio e pontuação.
  * Não possui qualquer referência ao DOM.
  */
 
@@ -18,10 +18,7 @@ function validateDictionaries(dicts) {
   for (const [lang, words] of Object.entries(dicts)) {
     const invalid = words.filter((w) => w.length !== WORD_LENGTH);
     if (invalid.length > 0) {
-      console.warn(
-        `[Model] Palavras inválidas removidas do dicionário "${lang}":`,
-        invalid
-      );
+      console.warn(`[Model] Palavras inválidas removidas do dicionário "${lang}":`, invalid);
     }
   }
   return Object.fromEntries(
@@ -34,16 +31,12 @@ function validateDictionaries(dicts) {
 
 const validatedDictionaries = validateDictionaries(DICTIONARIES);
 
-/**
- * Cria uma grade em branco com MAX_ATTEMPTS linhas e WORD_LENGTH colunas.
- */
+/** Cria uma grade em branco com MAX_ATTEMPTS linhas e WORD_LENGTH colunas. */
 function createEmptyGrid() {
   return Array.from({ length: MAX_ATTEMPTS }, () => Array(WORD_LENGTH).fill(""));
 }
 
-/**
- * Seleciona uma palavra aleatória do dicionário do idioma escolhido.
- */
+/** Seleciona uma palavra aleatória do dicionário do idioma escolhido. */
 function pickRandomWord(language) {
   const words = validatedDictionaries[language];
   return words[Math.floor(Math.random() * words.length)].toUpperCase();
@@ -61,9 +54,7 @@ function evaluateGuess(guess, secretWord) {
   });
 }
 
-/**
- * Calcula a pontuação de uma rodada com base nos resultados da avaliação.
- */
+/** Calcula a pontuação de uma rodada com base nos resultados da avaliação. */
 function calculateRoundScore(evaluationResults) {
   return evaluationResults.reduce((total, result) => {
     if (result === "correct") return total + POINTS_CORRECT_POSITION;
@@ -72,38 +63,38 @@ function calculateRoundScore(evaluationResults) {
   }, 0);
 }
 
-// ── Estado da partida ──────────────────────────────────────────────────────────
+// Estado da partida
 
 const GameModel = {
-  language: "",
-  secretWord: "",
-  grid: createEmptyGrid(),
-  currentRow: 0,
+  language:      "",
+  secretWord:    "",
+  grid:          createEmptyGrid(),
+  currentRow:    0,
   currentColumn: 0,
-  score: 0,
-  round: 1,
-  isGameOver: false,
+  score:         0,
+  round:         1,
+  isGameOver:    false,
 
   /** Inicializa ou reinicia a partida para o idioma escolhido. */
   startGame(language) {
-    this.language = language;
-    this.secretWord = pickRandomWord(language);
-    this.grid = createEmptyGrid();
-    this.currentRow = 0;
+    this.language      = language;
+    this.secretWord    = pickRandomWord(language);
+    this.grid          = createEmptyGrid();
+    this.currentRow    = 0;
     this.currentColumn = 0;
-    this.score = 0;
-    this.round = 1;
-    this.isGameOver = false;
+    this.score         = 0;
+    this.round         = 1;
+    this.isGameOver    = false;
   },
 
   /** Inicia uma nova rodada (nova palavra, mantém score e número de rodada). */
   nextRound() {
-    this.secretWord = pickRandomWord(this.language);
-    this.grid = createEmptyGrid();
-    this.currentRow = 0;
+    this.secretWord    = pickRandomWord(this.language);
+    this.grid          = createEmptyGrid();
+    this.currentRow    = 0;
     this.currentColumn = 0;
-    this.round += 1;
-    this.isGameOver = false;
+    this.round        += 1;
+    this.isGameOver    = false;
   },
 
   /** Adiciona uma letra à posição atual da grade. */
@@ -129,12 +120,12 @@ const GameModel = {
   submitGuess() {
     if (this.currentColumn < WORD_LENGTH) return null;
 
-    const guess = this.grid[this.currentRow].join("");
+    const guess             = this.grid[this.currentRow].join("");
     const evaluationResults = evaluateGuess(guess, this.secretWord);
-    const roundScore = calculateRoundScore(evaluationResults);
-    this.score += roundScore;
+    const roundScore        = calculateRoundScore(evaluationResults);
+    this.score             += roundScore;
 
-    const isCorrect = guess === this.secretWord;
+    const isCorrect  = guess === this.secretWord;
     this.currentRow += 1;
     this.currentColumn = 0;
 

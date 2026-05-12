@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <!-- ── Tela Inicial ─────────────────────────────────────── -->
+  <!-- Tela inicial -->
   <div id="screen-start">
     <h1 class="start-title">WORDLE ENG</h1>
     <p class="start-subtitle">Escolha o idioma / Choose your language</p>
@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <!-- ── Tela do Jogo ─────────────────────────────────────── -->
+  <!-- Tela do jogo -->
   <div id="screen-game" class="hidden">
     <p id="instruction-message"></p>
 
@@ -33,7 +33,7 @@
     <!-- Feedback flutuante -->
     <div id="feedback-message" class="feedback" role="alert" aria-live="polite"></div>
 
-    <!-- Teclado virtual para mobile -->
+    <!-- Teclado virtual -->
     <div class="virtual-keyboard" aria-label="Virtual keyboard">
       <div class="keyboard-row">
         <button class="key" data-key="Q">Q</button>
@@ -71,7 +71,7 @@
       </div>
     </div>
 
-    <!-- ── Overlay de fim de jogo ──────────────────────────────── -->
+    <!-- Overlay de fim de jogo -->
     <div id="game-overlay" class="game-overlay hidden">
       <div class="overlay-card">
         <p id="overlay-title" class="overlay-title"></p>
@@ -85,7 +85,7 @@
     </div>
   </div>
 
-  <!-- ── Scripts MVC (ordem importa: Model → View → Controller) ── -->
+  <!-- Scripts MVC (ordem importa: Model, View, Controller) -->
   <script src="js/model.js"></script>
   <script src="js/view.js"></script>
   <script src="js/controller.js"></script>

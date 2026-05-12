@@ -1,11 +1,8 @@
-/* ============================================================
-   WORDLE ENG — style.css
-   Design: dark retro-terminal com tipografia bold e animações
-   ============================================================ */
+/* WORDLE ENG - style.css */
 
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&display=swap');
 
-/* ── Variáveis ──────────────────────────────────────────────── */
+/* Variáveis */
 :root {
   --color-correct:  #538d4e;
   --color-present:  #b59f3b;
@@ -25,7 +22,7 @@
   --transition-flip: 0.35s ease-in-out;
 }
 
-/* ── Reset & Base ───────────────────────────────────────────── */
+/* Reset e base */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -39,10 +36,10 @@ body {
   padding: 24px 16px 48px;
 }
 
-/* ── Utilitário ─────────────────────────────────────────────── */
+/* Utilitário */
 .hidden { display: none !important; }
 
-/* ── Tela Inicial ───────────────────────────────────────────── */
+/* Tela inicial */
 #screen-start {
   display: flex;
   flex-direction: column;
@@ -95,8 +92,9 @@ body {
   box-shadow: 0 0 20px rgba(83,141,78,0.5);
 }
 
-/* ── Tela do Jogo ───────────────────────────────────────────── */
+/* Tela do jogo */
 #screen-game {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -133,7 +131,7 @@ body {
   margin-left: 4px;
 }
 
-/* ── Tabuleiro ──────────────────────────────────────────────── */
+/* Tabuleiro */
 #board {
   display: flex;
   flex-direction: column;
@@ -145,7 +143,7 @@ body {
   gap: var(--tile-gap);
 }
 
-/* ── Tiles ──────────────────────────────────────────────────── */
+/* Tiles */
 .tile {
   width: var(--tile-size);
   height: var(--tile-size);
@@ -169,11 +167,11 @@ body {
   animation: flip var(--transition-flip) ease forwards;
 }
 
-.tile--correct  { background: var(--color-correct);  border-color: var(--color-correct); }
-.tile--present  { background: var(--color-present);  border-color: var(--color-present); }
-.tile--absent   { background: var(--color-absent);   border-color: var(--color-absent);  }
+.tile--correct { background: var(--color-correct); border-color: var(--color-correct); }
+.tile--present { background: var(--color-present); border-color: var(--color-present); }
+.tile--absent  { background: var(--color-absent);  border-color: var(--color-absent);  }
 
-/* ── Animações ──────────────────────────────────────────────── */
+/* Animações */
 @keyframes pop {
   0%   { transform: scale(1); }
   50%  { transform: scale(1.12); }
@@ -186,7 +184,7 @@ body {
   100% { transform: rotateX(0); }
 }
 
-/* ── Feedback ───────────────────────────────────────────────── */
+/* Feedback */
 .feedback {
   position: fixed;
   top: 24px;
@@ -213,7 +211,7 @@ body {
 .feedback--error   { border-color: #e04; color: #e04; }
 .feedback--info    { border-color: var(--color-present); color: var(--color-present); }
 
-/* ── Teclado Virtual (mobile) ───────────────────────────────── */
+/* Teclado virtual */
 .virtual-keyboard {
   display: flex;
   flex-direction: column;
@@ -241,10 +239,10 @@ body {
   user-select: none;
 }
 
-.key:active        { background: #444; }
-.key--wide         { min-width: 56px; font-size: 0.65rem; }
+.key:active  { background: #444; }
+.key--wide   { min-width: 56px; font-size: 0.65rem; }
 
-/* Estados de letra no teclado virtual */
+/* Estados de letra no teclado */
 .key--correct {
   background: var(--color-correct);
   border-color: var(--color-correct);
@@ -261,7 +259,7 @@ body {
   color: #555;
 }
 
-/* ── Overlay de fim de jogo ─────────────────────────────────── */
+/* Overlay de fim de jogo */
 .game-overlay {
   position: absolute;
   inset: 0;
@@ -272,10 +270,6 @@ body {
   backdrop-filter: blur(4px);
   z-index: 50;
   animation: fadeIn 0.3s ease;
-}
-
-#screen-game {
-  position: relative;
 }
 
 .overlay-card {

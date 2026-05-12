@@ -1,32 +1,37 @@
+/**
+ * Controller - Mediador entre Model e View.
+ * Captura eventos e coordena as ações entre as duas camadas.
+ */
+
 const REVEAL_DELAY_PER_TILE_MS = 300;
 
 const MESSAGES = {
   pt: {
-    instruction: "Tente adivinhar a palavra de 5 letras.",
-    correct:     "🎉 Acertou! Próxima rodada...",
-    gameover:    (word) => `Fim de jogo! A palavra era: ${word}`,
-    overlayWin:  "🎉 Acertou!",
-    overlayLose: "😞 Fim de Jogo",
+    instruction:       "Tente adivinhar a palavra de 5 letras.",
+    correct:           "🎉 Acertou! Próxima rodada...",
+    gameover:          (word) => `Fim de jogo! A palavra era: ${word}`,
+    overlayWin:        "🎉 Acertou!",
+    overlayLose:       "😞 Fim de Jogo",
     overlayWordLabel:  (w) => `A palavra era: ${w}`,
     overlayScoreLabel: (s) => `Pontuação: ${s}`,
-    btnRestart:  "Reiniciar",
-    btnMenu:     "Menu Inicial",
+    btnRestart:        "Reiniciar",
+    btnMenu:           "Menu Inicial",
   },
   en: {
-    instruction: "Guess the 5-letter word.",
-    correct:     "🎉 Correct! Next round...",
-    gameover:    (word) => `Game over! The word was: ${word}`,
-    overlayWin:  "🎉 You got it!",
-    overlayLose: "😞 Game Over",
+    instruction:       "Guess the 5-letter word.",
+    correct:           "🎉 Correct! Next round...",
+    gameover:          (word) => `Game over! The word was: ${word}`,
+    overlayWin:        "🎉 You got it!",
+    overlayLose:       "😞 Game Over",
     overlayWordLabel:  (w) => `The word was: ${w}`,
     overlayScoreLabel: (s) => `Score: ${s}`,
-    btnRestart:  "Restart",
-    btnMenu:     "Main Menu",
+    btnRestart:        "Restart",
+    btnMenu:           "Main Menu",
   },
 };
 
 const GameController = {
-  // ── Inicialização ─────────────────────────────────────────────────────────
+  // Inicialização
 
   init() {
     this._bindLanguageButtons();
@@ -35,7 +40,7 @@ const GameController = {
     GameView.showStartScreen();
   },
 
-  // ── Início de partida ──────────────────────────────────────────────────────
+  // Início de partida
 
   startGame(language) {
     GameModel.startGame(language);
@@ -56,7 +61,7 @@ const GameController = {
     GameView.showStartScreen();
   },
 
-  // ── Processamento de teclas ───────────────────────────────────────────────
+  // Processamento de teclas
 
   handleKeyPress(key) {
     if (GameModel.isGameOver || GameModel.language === "") return;
@@ -87,11 +92,11 @@ const GameController = {
     }
   },
 
-  // ── Submissão do palpite ──────────────────────────────────────────────────
+  // Submissão do palpite
 
   _submitCurrentGuess() {
     const result = GameModel.submitGuess();
-    if (!result) return; // Linha incompleta — ignora
+    if (!result) return; // linha incompleta, ignora
 
     const { evaluationResults, isCorrect, isGameOver } = result;
     const submittedRow = GameModel.currentRow - 1;
@@ -135,7 +140,7 @@ const GameController = {
     }
   },
 
-  // ── Nova rodada ────────────────────────────────────────────────────────────
+  // Nova rodada
 
   _nextRound() {
     GameModel.nextRound();
@@ -144,7 +149,7 @@ const GameController = {
     GameView._resetKeyboardColors();
   },
 
-  // ── Binding de eventos ────────────────────────────────────────────────────
+  // Binding de eventos
 
   _bindLanguageButtons() {
     document.querySelectorAll("[data-language]").forEach((button) => {
@@ -182,7 +187,7 @@ const GameController = {
   },
 };
 
-// ── Ponto de entrada ─────────────────────────────────────────────────────────
+// Ponto de entrada
 document.addEventListener("DOMContentLoaded", () => {
   GameController.init();
 });
